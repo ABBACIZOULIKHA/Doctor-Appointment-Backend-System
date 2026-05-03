@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppConfigModule } from './config/config.module';
 import { DatabaseModule } from './database/database.module';
 // import { UsersModule } from './modules/users/users.module';
-// import { AuthModule } from './modules/auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 // import { PatientsModule } from './modules/patients/patients.module';
 // import { DoctorsModule } from './modules/doctors/doctors.module';
 // import { ClinicsModule } from './modules/clinics/clinics.module';
@@ -16,7 +16,7 @@ import { DatabaseModule } from './database/database.module';
   imports: [
     AppConfigModule,
     DatabaseModule,
-    // AuthModule,
+    AuthModule,
     // UsersModule,
     // PatientsModule,
     // DoctorsModule,

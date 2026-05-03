@@ -13,7 +13,7 @@ import {
   import { PatientProfile } from '../../patients/entities/patient-profile.entity';
   import { DoctorProfile } from '../../doctors/entities/doctor-profile.entity';
   import { Notification } from '../../notifications/entities/notification.entity';
-  import { File } from '../../files/entities/file.entity'
+  import { File } from '../../files/entities/file.entity';
   
   @Entity('users')
   export class User {
@@ -25,10 +25,16 @@ import {
     email: string;
   
     @Column({ nullable: true })
-    phone: string;
+    phone: string;  // ✅ Removed | null
   
     @Column({ name: 'password_hash' })
     passwordHash: string;
+  
+    @Column({ name: 'refresh_token_hash', nullable: true })
+    refreshTokenHash: string;  // ✅ Removed | null
+  
+    @Column({ name: 'refresh_token_expires_at', type: 'timestamp', nullable: true })
+    refreshTokenExpiresAt: Date;  // ✅ Removed | null
   
     @Column({
       type: 'enum',
@@ -58,4 +64,3 @@ import {
     @OneToMany(() => File, (file) => file.user)
     files: File[];
   }
-  
