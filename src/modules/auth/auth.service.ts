@@ -67,7 +67,7 @@ export class AuthService {
   async login(dto: LoginDto): Promise<AuthResponse> {
     const user = await this.usersRepository.findOne({
       where: { email: dto.email.toLowerCase() },
-      relations: { roles: true },
+      relations: ['roles'],
     });
 
     if (!user) {
@@ -86,7 +86,7 @@ export class AuthService {
   async refreshTokens(userId: string, refreshToken: string): Promise<AuthResponse> {
     const user = await this.usersRepository.findOne({
       where: { _id: userId },
-      relations: { roles: true },
+      relations: ['roles'],
     });
 
     if (!user || !user.refreshTokenHash || !user.refreshTokenExpiresAt) {

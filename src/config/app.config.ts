@@ -11,4 +11,11 @@ export default registerAs('app', () => ({
     jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES || '7d',
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     frontendUrl: process.env.FRONTEND_URL || 'http://localhost:3000',
+
+      // OAuth
+  googleClientId: process.env.GOOGLE_CLIENT_ID,
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  googleCallbackUrl: process.env.GOOGLE_CALLBACK_URL,
+
+  
   }));

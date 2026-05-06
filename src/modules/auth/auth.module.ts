@@ -10,6 +10,10 @@ import { UserRole } from './entities/user-role.entity';
 import { JwtAccessStrategy } from './strategies/jwt-access.strategy';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 import { User } from '../users/entities/user.entity';
+import { GoogleOAuthService } from './services/google-oauth.service';
+
+
+
 
 @Module({
   imports: [
@@ -27,7 +31,13 @@ import { User } from '../users/entities/user.entity';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtAccessStrategy, JwtRefreshStrategy],
-  exports: [AuthService],
+  providers: [AuthService , GoogleOAuthService, JwtAccessStrategy, JwtRefreshStrategy],
+  exports: [AuthService, GoogleOAuthService],
 })
 export class AuthModule {}
+
+
+
+
+
+
