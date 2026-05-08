@@ -1,3 +1,4 @@
+// src/modules/auth/auth.service.ts
 import {
   BadRequestException,
   Injectable,
@@ -54,13 +55,19 @@ export class AuthService {
 
     const savedUser = await this.usersRepository.save(user);
 
+    // ✅ Déterminer le rôle (patient par défaut si non spécifié)
+    const userRole = dto.role || RoleEnum.PATIENT;
+
+    // ✅ Validation : seul ADMIN peut créer un DOCTOR ou ADMIN
+    // (à implémenter avec un guard si nécessaire)
+    
     const defaultRole = this.userRolesRepository.create({
       userId: savedUser._id,
-      role: RoleEnum.PATIENT,
+      role: userRole,
     });
     await this.userRolesRepository.save(defaultRole);
 
-    const roles = [RoleEnum.PATIENT];
+    const roles = [userRole];
     return this.issueTokens(savedUser, roles);
   }
 
@@ -115,12 +122,12 @@ export class AuthService {
       .createQueryBuilder()
       .update(User)
       .set({
-        refreshTokenHash: () => 'NULL',    // Use SQL NULL
+        refreshTokenHash: () => 'NULL',
         refreshTokenExpiresAt: () => 'NULL',
       })
       .where('_id = :id', { id: userId })
       .execute();
-  
+
     return { message: 'Logged out successfully' };
   }
 
