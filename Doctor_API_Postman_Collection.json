@@ -1,0 +1,430 @@
+{
+  "info": {
+    "name": "Doctor Appointment API - Doctor Module",
+    "description": "Complete API collection for Doctor Profile, Availability, Calendar, and Analytics",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "🔐 Auth (Get Token First)",
+      "item": [
+        {
+          "name": "Register as Doctor",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/api/v1/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "email": "doctor@example.com",
+  "password": "password123",
+  "phone": "+1234567890",
+  "role": "doctor"
+}"
+            }
+          }
+        },
+        {
+          "name": "Login as Doctor",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/api/v1/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "email": "doctor@example.com",
+  "password": "password123"
+}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👤 Profile",
+      "item": [
+        {
+          "name": "Create Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{accessToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/v1/doctors/profile",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "name": "Dr. John Doe",
+  "specialization": "Cardiology",
+  "experienceYears": 10,
+  "maxAppointmentsPerDay": 20,
+  "bookingNoticeHours": 24,
+  "cancellationWindowHrs": 12,
+  "bio": "Experienced cardiologist with 10+ years in practice",
+  "licenseNumber": "CARD-2024-001",
+  "education": "MD from Harvard Medical School",
+  "languages": ["English", "French", "Arabic"]
+}"
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/profile"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{accessToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/v1/doctors/profile",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "bio": "Updated bio: Specialist in interventional cardiology",
+  "consultationFee": 150
+}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📅 Availability",
+      "item": [
+        {
+          "name": "Set Monday Availability",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{accessToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/v1/doctors/availability",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "dayOfWeek": 1,
+  "startTime": "09:00",
+  "endTime": "17:00",
+  "slotDurationMins": 30,
+  "isActive": true
+}"
+            }
+          }
+        },
+        {
+          "name": "Set Saturday Availability",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{accessToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/v1/doctors/availability",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "dayOfWeek": 6,
+  "startTime": "10:00",
+  "endTime": "14:00",
+  "slotDurationMins": 45,
+  "isActive": true
+}"
+            }
+          }
+        },
+        {
+          "name": "Get All Availability",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/availability"
+          }
+        },
+        {
+          "name": "Update Monday Availability",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{accessToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/v1/doctors/availability/1",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "dayOfWeek": 1,
+  "startTime": "08:00",
+  "endTime": "16:00",
+  "slotDurationMins": 30,
+  "isActive": true
+}"
+            }
+          }
+        },
+        {
+          "name": "Delete Saturday Availability",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/availability/6"
+          }
+        }
+      ]
+    },
+    {
+      "name": "⚠️ Exceptions (Days Off)",
+      "item": [
+        {
+          "name": "Create Day Off",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{accessToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/v1/doctors/exceptions",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "exceptionDate": "2026-05-15",
+  "isDayOff": true,
+  "reason": "Vacation"
+}"
+            }
+          }
+        },
+        {
+          "name": "Create Custom Hours Exception",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{accessToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/v1/doctors/exceptions",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "exceptionDate": "2026-05-20",
+  "isDayOff": false,
+  "overrideStartTime": "10:00",
+  "overrideEndTime": "12:00",
+  "reason": "Half-day: Conference"
+}"
+            }
+          }
+        },
+        {
+          "name": "Get Exceptions",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/exceptions?startDate=2026-05-01&endDate=2026-05-31"
+          }
+        },
+        {
+          "name": "Delete Exception",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/exceptions/{{exceptionId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏥 Clinics",
+      "item": [
+        {
+          "name": "Get My Clinics",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/clinics"
+          }
+        },
+        {
+          "name": "Update Clinic Fee",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{accessToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/v1/doctors/clinics/fee",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "clinicId": "{{clinicId}}",
+  "consultationFee": 200
+}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📆 Appointments Calendar",
+      "item": [
+        {
+          "name": "Get Daily View",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/appointments?view=day&date=2026-05-10"
+          }
+        },
+        {
+          "name": "Get Weekly View",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/appointments?view=week&date=2026-05-10"
+          }
+        },
+        {
+          "name": "Get Monthly View",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/appointments?view=month&date=2026-05-01"
+          }
+        },
+        {
+          "name": "Mark Appointment Completed",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{accessToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/v1/doctors/appointments/{{appointmentId}}/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "status": "completed",
+  "notes": "Patient responded well to treatment"
+}"
+            }
+          }
+        },
+        {
+          "name": "Mark Appointment No-Show",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{accessToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/v1/doctors/appointments/{{appointmentId}}/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "status": "no_show"
+}"
+            }
+          }
+        },
+        {
+          "name": "Cancel Appointment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{accessToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/v1/doctors/appointments/{{appointmentId}}/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{
+  "status": "cancelled",
+  "cancellationReason": "Doctor emergency"
+}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📊 Analytics & Earnings",
+      "item": [
+        {
+          "name": "Weekly Stats",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/analytics?period=week"
+          }
+        },
+        {
+          "name": "Monthly Stats",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/analytics?period=month"
+          }
+        },
+        {
+          "name": "Yearly Stats",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/analytics?period=year"
+          }
+        }
+      ]
+    },
+    {
+      "name": "🕐 Available Slots (For Patients)",
+      "item": [
+        {
+          "name": "Get Slots for Date",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}],
+            "url": "{{baseUrl}}/api/v1/doctors/slots/2026-05-10"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "clinicId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "appointmentId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "exceptionId",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
